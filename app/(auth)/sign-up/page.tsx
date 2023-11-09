@@ -1,121 +1,140 @@
-"use client"
+"use client";
 import "/app/globals.css";
 import Link from "next/link";
-import React, { useEffect, useState } from 'react';
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase"
-import { useRouter } from 'next/navigation'
+import Image from "next/image";
+import { IoLogoGoogle } from "react-icons/io";
+import React, { useEffect, useState } from "react";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../../firebase";
+import { useRouter } from "next/navigation";
 
-const signUp = () => {
+const SignUp = () => {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true)
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  const gProvider = new GoogleAuthProvider();
 
   useEffect(() => {
     if (email && password && username) {
       setIsButtonDisabled(false);
-    }
-    else {
+    } else {
       setIsButtonDisabled(true);
     }
-  }, [email, username, password])
+  }, [email, username, password]);
 
-  const createUser = (e: any) => {
+  const createUser = (e) => {
     e.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      router.replace('/');
-    })
-    .catch((error) => {
-      console.log("Error", error.code);
-    })
-  }
+      .then((userCredential) => {
+        router.replace("/");
+      })
+      .catch((error) => {
+        console.log("Error", error.code);
+      });
+  };
+
+  const signInWithGoogle = async () => {
+    try {
+      await signInWithPopup(auth, gProvider).then(() => {
+        router.replace("/");
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Create an account
-        </h2>
-      </div>
-
-      <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" onSubmit={createUser} method="POST">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                onChange={(event) => setEmail(event.target.value)}
-                autoComplete="email"
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
+    <div className="h-[100vh] flex justify-center items-center">
+      {/* <ToastMessage /> */}
+      <Image
+        src="/logo.svg"
+        width={200}
+        height={200}
+        alt="logo"
+        className="absolute top-3"
+      />
+      <div className="flex items-center flex-col border-slate-900 border-[3px] rounded-[30px] p-10">
+        <div className="text-center">
+          <div className="text-4xl font-bold">Create an account</div>
+        </div>
+        <div className="gap-2 w-full mt-10 mb-5 flex justify-center">
+          <div
+            className="bg-gradient-to-r from-green-500 via-lime-300 to-yellow-400 w-[330px] h-14 rounded-full cursor-pointer p-[2px]"
+            onClick={signInWithGoogle}
+          >
+            <div className="flex items-center justify-center gap-3 text-white font-semibold w-full h-full rounded-full bg-slate-800">
+              <IoLogoGoogle size={24} />
+              <span>Register with Google</span>
             </div>
           </div>
+        </div>
+        <div className="flex items-center gap-1">
+          <span className="w-5 h-[1px] bg-slate-400"></span>
+          <span className="font-semibold text-gray-500">OR</span>
+          <span className="w-5 h-[1px] bg-slate-400"></span>
+        </div>
+        <form
+          className="flex flex-col items-center gap-3 w-[500px] mt-5"
+          onSubmit={createUser}
+          method="POST"
+        >
+          <input
+            id="email"
+            placeholder="Email"
+            name="email"
+            type="email"
+            onChange={(event) => setEmail(event.target.value)}
+            autoComplete="email"
+            required
+            className="w-full h-14 bg-slate-200 rounded-full outline-none border-none px-5 text-gray-900 placeholder:text-gray-900"
+          />
+          <input
+            id="username"
+            placeholder="Username"
+            name="username"
+            type="username"
+            onChange={(event) => setUsername(event.target.value)}
+            autoComplete="username"
+            required
+            className="w-full h-14 bg-slate-200 rounded-full outline-none border-none px-5 text-gray-900 placeholder:text-gray-900"
+          />
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={(event) => setPassword(event.target.value)}
+            required
+            placeholder="Password"
+            className="w-full h-14 bg-slate-200 rounded-full outline-none border-none px-5 text-gray-900 placeholder:text-gray-900"
+            autoComplete="new-password"
+          />
 
-          <div>
-            <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-              Username
-            </label>
-            <div className="mt-2">
-              <input
-                id="username"
-                name="username"
-                type="username"
-                onChange={(event) => setUsername(event.target.value)}
-                autoComplete="username"
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                Password
-              </label>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                onChange={(event) => setPassword(event.target.value)}
-                autoComplete="new-password"
-                required
-                className="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              disabled={isButtonDisabled}
-              className={`flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 ${ isButtonDisabled ? "bg-blue-400" : "bg-blue-600 hover:bg-blue-500" }`}
-            >
-              Sign up
-            </button>
-          </div>
+          <button
+            className="mt-4 w-[150px] h-14 rounded-full outline-none text-base font-semibold bg-gradient-to-r from-slate-600 via-slate-800 to-slate-900 text-white"
+            type="submit"
+          >
+            Register
+          </button>
         </form>
-
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Already have an account?{' '}
-          <Link href="/sign-in" className="font-semibold leading-6 text-blue-600 hover:text-blue-500">
-            Sign In
+        <div className="flex justify-center gap-1 text-c3 mt-5">
+          <span>Already a member?</span>
+          <Link
+            href="/sign-in"
+            className="font-semibold text-slate-900 underline underline-offset-2 cursor-pointer"
+          >
+            Sign in
           </Link>
-        </p>
+        </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default signUp
+export default SignUp;
