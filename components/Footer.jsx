@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { footerLinks } from "@/constants";
 
 const Footer = () => {
   return (
@@ -20,22 +19,24 @@ const Footer = () => {
         </div>
 
         <div className="footer__links">
-          {footerLinks.map((item) => (
-            <div key={item.title} className="footer__link">
-              <h3 className="font-bold">{item.title}</h3>
-              <div className="flex flex-col gap-5">
-                {item.links.map((link) => (
-                  <Link
-                    key={link.title}
-                    href={link.url}
-                    className="text-gray-500"
-                  >
-                    {link.title}
-                  </Link>
-                ))}
-              </div>
+          <div className="footer__link">
+            <h3 className="font-bold">Team 540 - Members</h3>
+            <div className="flex flex-col">
+              Gattam Thulasiram Jeshwanth (21BCT0151)
             </div>
-          ))}
+            <div className="flex flex-col">
+              Perugu Rishi Kiran (21BCT0428)
+            </div>
+            <div className="flex flex-col">
+              Jall Balasai (21BCE3403)
+            </div>
+            <div className="flex flex-col">
+              Faheem Muhammad O (21BCE2426)
+            </div>
+            <div className="flex flex-col">
+              Vaibhav Sanket (21BCE0644)
+            </div>
+          </div>
         </div>
       </div>
 
