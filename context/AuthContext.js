@@ -30,6 +30,8 @@ export const AuthContextProvider = ({ children }) => {
           setPhone(resJson.phone);
           setUserID(resJson._id);
           setIsSeller(false);
+          setIsSigned(true);
+          setIsLoading(false);
         })
         .catch(async () => {
           const res = await fetch("https://bike-showroom-backend-l81h.onrender.com/getRoute/get-seller-by-email/" + currentUser.email);
@@ -37,13 +39,13 @@ export const AuthContextProvider = ({ children }) => {
           setPhone(resJson.phone);
           setUserID(resJson._id);
           setIsSeller(true);
+          setIsSigned(true);
+          setIsLoading(false);
         })
-        setIsSigned(true);
       }
       else {
         setIsSigned(false);
       }
-      setIsLoading(false);
     });
   }, [user]);
 
