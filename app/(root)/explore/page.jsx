@@ -3,7 +3,7 @@ import { BikeList, SearchBar } from "@/components"
 import { useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export default function explore () {
+export default function Explore () {
   const [companyObj,setCompanyObj] = useState({});
   const [bikeList,setBikeList] = useState([]);
   const [filteredBikeList,setFilteredBikeList] = useState([]);
