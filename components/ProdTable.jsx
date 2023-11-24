@@ -20,9 +20,9 @@ function ProdTable({items, date, address}) {
   const getDate = () => {
     const dateObj = new Date(date);
     if (dateObj.getMinutes() < 10)
-      return String(dateObj.getDate()) + "-" + String(dateObj.getMonth()) + "-" + String(dateObj.getFullYear()) + "\n" + String(dateObj.getHours()) + ":" + "0" + String(dateObj.getMinutes());
+      return String(dateObj.getDate()) + "-" + String(dateObj.getMonth() + 1) + "-" + String(dateObj.getFullYear()) + "\n" + String(dateObj.getHours()) + ":" + "0" + String(dateObj.getMinutes());
     else
-      return String(dateObj.getDate()) + "-" + String(dateObj.getMonth()) + "-" + String(dateObj.getFullYear()) + "\n" + String(dateObj.getHours()) + ":" + String(dateObj.getMinutes());
+      return String(dateObj.getDate()) + "-" + String(dateObj.getMonth() + 1) + "-" + String(dateObj.getFullYear()) + "\n" + String(dateObj.getHours()) + ":" + String(dateObj.getMinutes());
   }
 
   const isDelivered = () => {
