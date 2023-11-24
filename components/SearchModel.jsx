@@ -57,7 +57,7 @@ const SearchModel = ({ models, model, setModel }) => {
                   value={query}
                   className="search-model__option"
                 >
-                  "{query}"
+                  {query}
                 </Combobox.Option>
               ) : (
                 filteredModels.map((item) => (

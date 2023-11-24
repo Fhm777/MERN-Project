@@ -58,7 +58,7 @@ const SearchManufacturer = ({ manufacturers, manufacturer, setManuFacturer }) =>
                   value={query}
                   className="search-manufacturer__option"
                 >
-                  "{query}"
+                  {query}
                 </Combobox.Option>
               ) : (
                 filteredManufacturers.map((item) => (
