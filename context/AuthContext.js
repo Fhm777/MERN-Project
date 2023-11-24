@@ -45,6 +45,7 @@ export const AuthContextProvider = ({ children }) => {
       }
       else {
         setIsSigned(false);
+        setIsLoading(false);
       }
     });
   }, [user]);
