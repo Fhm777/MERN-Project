@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import CustomButton from "./CustomButton";
+import Link from "next/link";
 
 const Hero = () => {
   const handleScroll = () => {};
@@ -12,11 +13,13 @@ const Hero = () => {
         <p className="hero__subtitle">
           Explore a world of motorbike excellence with our added trust.
         </p>
-        <CustomButton
-          title="Explore Bikes"
-          containerStyles="bg-primary-blue text-white rounded-full mt-10"
-          handleClick={handleScroll}
-        />
+        <Link href="/explore">
+          <CustomButton
+            title="Explore Bikes"
+            containerStyles="bg-primary-blue text-white rounded-full mt-10"
+            handleClick={handleScroll}
+          />
+        </Link>
       </div>
       <div className="hero__image-container">
         <div className="hero__image ">
