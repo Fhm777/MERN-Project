@@ -63,13 +63,18 @@ const UserCart = ({id}) => {
     for (let i=0; i<cartItems.length; i++) {
       let prodRes = await fetch("https://bike-showroom-backend-l81h.onrender.com/updateRoute/update-product/" + cartItems[i].product_id);
       let prodDetails = await prodRes.json();
-      console.log(prodDetails);
-      if (prodDetails.stock_quantity < cartItems[i].quantity) {
-        mod = false;
-        index = 0;
-        break;
+      if (prodDetails) {
+        console.log(prodDetails);
+        if (prodDetails.stock_quantity < cartItems[i].quantity) {
+          mod = false;
+          index = 0;
+          break;
+        }
+        products.push(prodDetails);
       }
-      products.push(prodDetails);
+      else {
+        mod = false;
+      }
     }
     if (mod) {
       for (let i=0; i<cartItems.length; i++) {
