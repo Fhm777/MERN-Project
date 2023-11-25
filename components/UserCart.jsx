@@ -67,13 +67,14 @@ const UserCart = ({id}) => {
         console.log(prodDetails);
         if (prodDetails.stock_quantity < cartItems[i].quantity) {
           mod = false;
-          index = 0;
+          index = i+1;
           break;
         }
         products.push(prodDetails);
       }
       else {
         mod = false;
+        index = i+1;
       }
     }
     if (mod) {
